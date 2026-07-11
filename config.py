@@ -27,4 +27,22 @@ CATEGORIES = {
 
     53: "triller/14"
 
+    SERIES_CATEGORIES = {
+
+    10759: "serialy/boevik",
+
+    27: "serialy/uzhasy",
+
+    9648: "serialy/mistika",
+
+    35: "serialy/komedija",
+
+    18: "serialy/drama",
+
+    10765: "serialy/fantastika",
+
+    80: "serialy/kriminal"
+
+}
+    
 }
