@@ -1,6 +1,6 @@
 import requests
 import json
-
+from template import movie_template
 from config import TMDB_KEY, LANG
 
 
