@@ -2,6 +2,7 @@ import requests
 import json
 
 from config import TMDB_KEY, LANG
+from ucoz import create_article
 
 
 DATABASE = "database.json"
@@ -47,6 +48,7 @@ def save_database(data):
 
 def get_series():
 
+
     url = "https://api.themoviedb.org/3/tv/popular"
 
 
@@ -59,44 +61,152 @@ def get_series():
     }
 
 
+
     response = requests.get(
         url,
         params=params
     )
 
 
-    data=response.json()
+
+    data = response.json()
 
 
-    return data.get(
-        "results",
-        []
+
+    if "results" not in data:
+
+        print(data)
+
+        return []
+
+
+
+    return data["results"]
+
+
+
+
+def series_template(item):
+
+
+    title = item.get(
+        "name",
+        "Без назви"
+    )
+
+
+    year = item.get(
+        "first_air_date",
+        ""
+    )[:4]
+
+
+
+    poster = (
+
+        "https://image.tmdb.org/t/p/w500"
+
+        +
+
+        str(
+            item.get(
+                "poster_path"
+            )
+        )
+
     )
 
 
 
+    rating = item.get(
+        "vote_average",
+        0
+    )
 
-def show_series(item):
 
 
-    print("----------------------")
+    description = item.get(
+        "overview",
+        ""
+    )
 
 
-    print(
-        "Серіал:",
-        item["name"]
+
+    html = f"""
+
+<center>
+
+<img src="{poster}" width="300">
+
+</center>
+
+
+<h1>
+{title} ({year})
+</h1>
+
+
+<p>
+
+⭐ Рейтинг:
+{rating}
+
+</p>
+
+
+<h2>
+Опис
+</h2>
+
+
+<p>
+{description}
+</p>
+
+
+<h2>
+Дивитися онлайн
+</h2>
+
+
+ВАШ_ПЛЕЄР
+
+
+"""
+
+
+
+    return html
+
+
+
+
+def create_series(item):
+
+
+    title = item.get(
+        "name"
+    )
+
+
+    html = series_template(item)
+
+
+
+    create_article(
+
+        title,
+
+        html,
+
+        "serials"
+
     )
 
 
     print(
-        "Рейтинг:",
-        item["vote_average"]
-    )
-
-
-    print(
-        "Опис:",
-        item["overview"]
+        "Додано серіал:",
+        title
     )
 
 
@@ -106,37 +216,53 @@ def main():
 
 
     print(
-        "START SERIES BOT"
+        "===== START SERIES BOT ====="
     )
 
 
-    database=load_database()
+
+    database = load_database()
 
 
-    series=get_series()
+    series = get_series()
+
+
+
+    count = 0
 
 
 
     for item in series:
 
 
-        sid=item["id"]
+        series_id = item["id"]
 
 
 
-        if sid in database:
+        if series_id in database:
+
+            print(
+                "Пропуск:",
+                item["name"]
+            )
 
             continue
 
 
 
-        show_series(item)
+
+        create_series(item)
 
 
 
         database.append(
-            sid
+            series_id
         )
+
+
+
+        count += 1
+
 
 
 
@@ -145,12 +271,18 @@ def main():
 
 
     print(
-        "END SERIES BOT"
+        "Нових серіалів:",
+        count
+    )
+
+
+    print(
+        "===== END SERIES BOT ====="
     )
 
 
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     main()
