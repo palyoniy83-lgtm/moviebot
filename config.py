@@ -1,5 +1,5 @@
 # TMDB API ключ
-TMDB_KEY = "ВСТАВ_СЮДИ_СВІЙ_TMDB_KEY"
+TMDB_KEY = "f50f852ce80e1de57db1003dbd8ee4cd"
 
 
 # мова отримання даних
