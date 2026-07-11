@@ -96,6 +96,84 @@ def create_movie(movie):
     html = movie_template(movie)
 
 
+    category = get_category(movie)
+
+
+
+    # створюємо папку
+
+    import os
+
+
+    folder = "output/movies"
+
+
+    os.makedirs(
+        folder,
+        exist_ok=True
+    )
+
+
+
+    filename = title.replace(
+        "/",
+        "_"
+    )
+
+
+    filename = filename + ".html"
+
+
+
+    path = os.path.join(
+        folder,
+        filename
+    )
+
+
+
+    with open(
+        path,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        file.write(html)
+
+
+
+    create_article(
+
+        title,
+
+        html,
+
+        category
+
+    )
+
+
+    print(
+        "Створено:",
+        title
+    )
+
+
+    print(
+        "Категорія:",
+        category
+    )
+
+
+    title = movie.get(
+        "title",
+        "Без назви"
+    )
+
+
+    html = movie_template(movie)
+
+
 
     category = get_category(movie)
 
