@@ -2,23 +2,34 @@
 TMDB_KEY = "f50f852ce80e1de57db1003dbd8ee4cd"
 
 
-# мова отримання даних
 LANG = "uk-UA"
 
 
-# сайт uCoz
 SITE = "5star.at.ua"
 
 
-# категорії uCoz
 
 CATEGORIES = {
 
-    "Action": 13,
-    "Mystery": 3,
-    "Comedy": 9,
-    "Fantasy": 10,
-    "Horror": 11,
-    "Drama": 12
 
+    # TMDB genre ID : uCoz category
+
+
+    28: "boevik/13",        # Action
+
+    27: "uzhasy/11",        # Horror
+
+    9648: "mistika/3",      # Mystery
+
+    35: "komedija/9",       # Comedy
+
+    14: "fantastika/10",    # Fantasy
+
+    18: "drama/12",         # Drama
+
+    878: "fantastika/10",   # Sci-Fi
+
+    53: "triller/14"        # Thriller
+
+}
 }
