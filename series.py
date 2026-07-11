@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 from config import TMDB_KEY, LANG
 from ucoz import create_article
@@ -27,7 +28,6 @@ def load_database():
 
 
 
-
 def save_database(data):
 
     with open(
@@ -42,7 +42,6 @@ def save_database(data):
             indent=4,
             ensure_ascii=False
         )
-
 
 
 
@@ -75,6 +74,8 @@ def get_series():
 
     if "results" not in data:
 
+        print("Помилка TMDB:")
+
         print(data)
 
         return []
@@ -102,22 +103,6 @@ def series_template(item):
 
 
 
-    poster = (
-
-        "https://image.tmdb.org/t/p/w500"
-
-        +
-
-        str(
-            item.get(
-                "poster_path"
-            )
-        )
-
-    )
-
-
-
     rating = item.get(
         "vote_average",
         0
@@ -125,43 +110,78 @@ def series_template(item):
 
 
 
+    poster_path = item.get(
+        "poster_path"
+    )
+
+
+
+    if poster_path:
+
+        poster = (
+            "https://image.tmdb.org/t/p/w500/"
+            +
+            poster_path
+        )
+
+    else:
+
+        poster = ""
+
+
+
     description = item.get(
         "overview",
-        ""
+        "Опис відсутній"
     )
 
 
 
     html = f"""
 
+<div class="series-card">
+
+
 <center>
 
-<img src="{poster}" width="300">
+<img src="{poster}"
+style="width:300px;border-radius:10px;">
 
 </center>
 
 
+
 <h1>
+
 {title} ({year})
+
 </h1>
+
+
+<hr>
 
 
 <p>
 
-⭐ Рейтинг:
-{rating}
+<b>⭐ Рейтинг:</b>
+
+{rating}/10
 
 </p>
 
 
+
 <h2>
-Опис
+Опис серіалу
 </h2>
 
 
 <p>
+
 {description}
+
 </p>
+
 
 
 <h2>
@@ -169,11 +189,37 @@ def series_template(item):
 </h2>
 
 
-ВАШ_ПЛЕЄР
+<div style="
+background:#111;
+padding:20px;
+color:white;
+text-align:center;
+">
 
+
+ТУТ БУДЕ ПЛЕЄР
+
+
+</div>
+
+
+
+<h2>
+Трейлер
+</h2>
+
+
+<div>
+
+ТУТ БУДЕ YOUTUBE
+
+</div>
+
+
+
+</div>
 
 """
-
 
 
     return html
@@ -185,11 +231,47 @@ def create_series(item):
 
 
     title = item.get(
-        "name"
+        "name",
+        "Без назви"
     )
 
 
+
     html = series_template(item)
+
+
+
+    os.makedirs(
+        "results/series",
+        exist_ok=True
+    )
+
+
+
+    filename = title.replace(
+        "/",
+        "_"
+    )
+
+
+
+    path = (
+        "results/series/"
+        +
+        filename
+        +
+        ".html"
+    )
+
+
+
+    with open(
+        path,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        file.write(html)
 
 
 
@@ -204,8 +286,9 @@ def create_series(item):
     )
 
 
+
     print(
-        "Додано серіал:",
+        "Створено серіал:",
         title
     )
 
@@ -224,7 +307,18 @@ def main():
     database = load_database()
 
 
+
     series = get_series()
+
+
+
+    if not series:
+
+        print(
+            "Серіали не знайдені"
+        )
+
+        return
 
 
 
@@ -241,10 +335,12 @@ def main():
 
         if series_id in database:
 
+
             print(
                 "Пропуск:",
                 item["name"]
             )
+
 
             continue
 
@@ -274,6 +370,7 @@ def main():
         "Нових серіалів:",
         count
     )
+
 
 
     print(
