@@ -4,6 +4,7 @@ import os
 
 from config import TMDB_KEY, LANG
 from ucoz import create_article
+from series_categories import get_series_category
 
 
 DATABASE = "database.json"
@@ -275,15 +276,19 @@ def create_series(item):
 
 
 
-    create_article(
+    category = get_series_category(item)
 
-        title,
 
-        html,
 
-        "serials"
+create_article(
 
-    )
+    title,
+
+    html,
+
+    category
+
+)
 
 
 
