@@ -4,6 +4,7 @@ import json
 from config import TMDB_KEY, LANG
 from template import movie_template
 from ucoz import create_article
+from categories import get_category
 
 
 DATABASE = "database.json"
