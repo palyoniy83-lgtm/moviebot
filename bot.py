@@ -93,9 +93,9 @@ def create_movie(movie):
 
 
     os.makedirs(
-        "output/movies",
-        exist_ok=True
-    )
+    "results/movies",
+    exist_ok=True
+)
 
 
     filename = title.replace(
@@ -105,12 +105,12 @@ def create_movie(movie):
 
 
     path = (
-        "output/movies/"
-        +
-        filename
-        +
-        ".html"
-    )
+    "results/movies/"
+    +
+    filename
+    +
+    ".html"
+)
 
 
 
