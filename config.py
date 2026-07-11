@@ -11,25 +11,20 @@ SITE = "5star.at.ua"
 
 CATEGORIES = {
 
+    28: "boevik/13",
 
-    # TMDB genre ID : uCoz category
+    27: "uzhasy/11",
 
+    9648: "mistika/3",
 
-    28: "boevik/13",        # Action
+    35: "komedija/9",
 
-    27: "uzhasy/11",        # Horror
+    14: "fantastika/10",
 
-    9648: "mistika/3",      # Mystery
+    18: "drama/12",
 
-    35: "komedija/9",       # Comedy
+    878: "fantastika/10",
 
-    14: "fantastika/10",    # Fantasy
+    53: "triller/14"
 
-    18: "drama/12",         # Drama
-
-    878: "fantastika/10",   # Sci-Fi
-
-    53: "triller/14"        # Thriller
-
-}
 }
