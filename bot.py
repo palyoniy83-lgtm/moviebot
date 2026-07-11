@@ -15,7 +15,6 @@ DATABASE = "database.json"
 def load_database():
 
     try:
-
         with open(
             DATABASE,
             "r",
@@ -49,7 +48,6 @@ def save_database(data):
 
 def get_movies():
 
-
     url = "https://api.themoviedb.org/3/movie/popular"
 
 
@@ -71,17 +69,10 @@ def get_movies():
     data = response.json()
 
 
-    if "results" not in data:
-
-        print("Помилка TMDB:")
-
-        print(data)
-
-        return []
-
-
-    return data["results"]
-
+    return data.get(
+        "results",
+        []
+    )
 
 
 
@@ -101,19 +92,10 @@ def create_movie(movie):
 
 
 
-    # створюємо папку
-
-    import os
-
-
-    folder = "output/movies"
-
-
     os.makedirs(
-        folder,
+        "output/movies",
         exist_ok=True
     )
-
 
 
     filename = title.replace(
@@ -122,13 +104,12 @@ def create_movie(movie):
     )
 
 
-    filename = filename + ".html"
-
-
-
-    path = os.path.join(
-        folder,
+    path = (
+        "output/movies/"
+        +
         filename
+        +
+        ".html"
     )
 
 
@@ -166,38 +147,6 @@ def create_movie(movie):
     )
 
 
-    title = movie.get(
-        "title",
-        "Без назви"
-    )
-
-
-    html = movie_template(movie)
-
-
-
-    category = get_category(movie)
-
-
-
-create_article(
-
-    title,
-
-    html,
-
-    category
-
-)
-
-
-    print(
-        "Додано:",
-        title
-    )
-
-
-
 
 def main():
 
@@ -214,20 +163,6 @@ def main():
 
 
 
-    if not movies:
-
-        print(
-            "Фільми не знайдені"
-        )
-
-        return
-
-
-
-    count = 0
-
-
-
     for movie in movies:
 
 
@@ -237,15 +172,12 @@ def main():
 
         if movie_id in database:
 
-
             print(
                 "Пропуск:",
                 movie["title"]
             )
 
-
             continue
-
 
 
 
@@ -258,25 +190,14 @@ def main():
         )
 
 
-        count += 1
-
-
-
 
     save_database(database)
 
 
 
     print(
-        "Додано нових фільмів:",
-        count
-    )
-
-
-    print(
         "===== END MOVIE BOT ====="
     )
-
 
 
 
