@@ -136,21 +136,21 @@ def main():
     for movie in movies:
 
 
-        movie_id = movie["id"]
+    movie_id = movie["id"]
 
 
+    if movie_id in database:
 
-        if movie_id in database:
-
-            continue
-
+        continue
 
 
-        create_movie(movie)
+    html = movie_template(movie)
 
 
+    print(html)
 
-        database.append(
+
+    database.append(movie_id)
             movie_id
         )
 
