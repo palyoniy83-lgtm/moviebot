@@ -1,11 +1,13 @@
 import requests
 import json
 
-from template import movie_template
 from config import TMDB_KEY, LANG
+from template import movie_template
+from ucoz import create_article
 
 
 DATABASE = "database.json"
+
 
 
 def load_database():
@@ -45,6 +47,7 @@ def save_database(data):
 
 def get_movies():
 
+
     url = "https://api.themoviedb.org/3/movie/popular"
 
 
@@ -66,27 +69,59 @@ def get_movies():
     data = response.json()
 
 
-    return data.get(
-        "results",
-        []
-    )
+    if "results" not in data:
+
+        print("Помилка TMDB:")
+
+        print(data)
+
+        return []
+
+
+    return data["results"]
+
 
 
 
 def create_movie(movie):
 
 
+    title = movie.get(
+        "title",
+        "Без назви"
+    )
+
+
     html = movie_template(movie)
 
 
-    print(html)
+
+    create_article(
+
+        title,
+
+        html,
+
+        "films"
+
+    )
+
+
+
+    print(
+        "Додано:",
+        title
+    )
+
 
 
 
 def main():
 
 
-    print("START MOVIE BOT")
+    print(
+        "===== START MOVIE BOT ====="
+    )
 
 
     database = load_database()
@@ -96,15 +131,38 @@ def main():
 
 
 
+    if not movies:
+
+        print(
+            "Фільми не знайдені"
+        )
+
+        return
+
+
+
+    count = 0
+
+
+
     for movie in movies:
 
 
         movie_id = movie["id"]
 
 
+
         if movie_id in database:
 
+
+            print(
+                "Пропуск:",
+                movie["title"]
+            )
+
+
             continue
+
 
 
 
@@ -117,11 +175,24 @@ def main():
         )
 
 
+        count += 1
+
+
+
 
     save_database(database)
 
 
-    print("END MOVIE BOT")
+
+    print(
+        "Додано нових фільмів:",
+        count
+    )
+
+
+    print(
+        "===== END MOVIE BOT ====="
+    )
 
 
 
