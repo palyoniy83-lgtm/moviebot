@@ -19,7 +19,10 @@ def movie_template(movie):
         0
     )
 
-
+genres = movie.get(
+    "genre_ids",
+    []
+)
     poster_path = movie.get(
         "poster_path"
     )
