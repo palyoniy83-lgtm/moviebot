@@ -1,4 +1,3 @@
-id="template_code"
 def movie_template(movie):
 
 
@@ -19,10 +18,7 @@ def movie_template(movie):
         0
     )
 
-genres = movie.get(
-    "genre_ids",
-    []
-)
+
     poster_path = movie.get(
         "poster_path"
     )
@@ -31,7 +27,7 @@ genres = movie.get(
     if poster_path:
 
         poster = (
-            "https://image.tmdb.org/t/p/w500"
+            "https://image.tmdb.org/t/p/w500/"
             +
             poster_path
         )
@@ -62,7 +58,6 @@ style="width:300px;border-radius:10px;">
 </center>
 
 
-
 <h1>
 
 {title} ({year})
@@ -70,9 +65,7 @@ style="width:300px;border-radius:10px;">
 </h1>
 
 
-
 <hr>
-
 
 
 <p>
@@ -106,8 +99,8 @@ style="width:300px;border-radius:10px;">
 <div style="
 background:#111;
 padding:20px;
-text-align:center;
 color:white;
+text-align:center;
 ">
 
 
