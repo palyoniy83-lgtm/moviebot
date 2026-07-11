@@ -35,5 +35,4 @@ jobs:
     - name: Start bot
       run:
         python bot.py
-
         python series.py
