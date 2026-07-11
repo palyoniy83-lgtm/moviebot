@@ -1,15 +1,16 @@
+id="template_code"
 def movie_template(movie):
 
 
     title = movie.get(
         "title",
-        movie.get("name","")
+        "Без назви"
     )
 
 
     year = movie.get(
         "release_date",
-        movie.get("first_air_date","")
+        ""
     )[:4]
 
 
@@ -19,11 +20,23 @@ def movie_template(movie):
     )
 
 
-    poster = (
-        "https://image.tmdb.org/t/p/w500"
-        +
-        str(movie.get("poster_path"))
+    poster_path = movie.get(
+        "poster_path"
     )
+
+
+    if poster_path:
+
+        poster = (
+            "https://image.tmdb.org/t/p/w500"
+            +
+            poster_path
+        )
+
+    else:
+
+        poster = ""
+
 
 
     description = movie.get(
@@ -35,45 +48,51 @@ def movie_template(movie):
 
     html = f"""
 
+<div class="movie-card">
+
+
 <center>
 
-<img src="{poster}" width="300">
+<img src="{poster}" 
+style="width:300px;border-radius:10px;">
 
 </center>
 
 
+
 <h1>
+
 {title} ({year})
+
 </h1>
+
 
 
 <hr>
 
 
+
+<p>
+
 <b>⭐ Рейтинг:</b>
 
-{rating}
+{rating}/10
 
+</p>
 
-<br><br>
-
-
-<b>📅 Рік:</b>
-
-{year}
-
-
-<br><br>
 
 
 <h2>
-Опис
+Опис фільму
 </h2>
 
 
 <p>
+
 {description}
+
 </p>
+
 
 
 <h2>
@@ -81,11 +100,19 @@ def movie_template(movie):
 </h2>
 
 
-<div>
+<div style="
+background:#111;
+padding:20px;
+text-align:center;
+color:white;
+">
 
-ВАШ_ПЛЕЄР_ТУТ
+
+ТУТ БУДЕ ПЛЕЄР
+
 
 </div>
+
 
 
 <h2>
@@ -95,7 +122,13 @@ def movie_template(movie):
 
 <div>
 
-ВАШ_ТРАЙЛЕР_ТУТ
+
+ТУТ БУДЕ YOUTUBE
+
+
+</div>
+
+
 
 </div>
 
