@@ -97,16 +97,19 @@ def create_movie(movie):
 
 
 
-    create_article(
+    category = get_category(movie)
 
-        title,
 
-        html,
 
-        "films"
+create_article(
 
-    )
+    title,
 
+    html,
+
+    category
+
+)
 
 
     print(
