@@ -1,11 +1,17 @@
-# TMDB API ключ
-TMDB_KEY = "f50f852ce80e1de57db1003dbd8ee4cd"
+import os
 
 
-LANG = "uk-UA"
+UCOZ_TOKEN = os.getenv(
+    "UCOZ_TOKEN"
+)
 
 
-SITE = "5star.at.ua"
+TMDB_KEY = os.getenv(
+    "TMDB_KEY"
+)
+
+
+SITE = "https://5star.at.ua"
 
 
 
